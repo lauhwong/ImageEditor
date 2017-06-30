@@ -35,5 +35,4 @@ License
  Reference
  ----------
  1.<https://github.com/chrisbanes/PhotoView>  
- 
  2.<https://github.com/Curzibn/Luban>

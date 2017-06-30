@@ -3,6 +3,13 @@ ImageEditor
 
 ![Logo](logo.png)
 
+
+Look like whta ?
+--------------
+
+![Logo](editor01.gif)
+
+
 How to use lib
 --------------
 
@@ -17,7 +24,7 @@ val setup = EditorSetup(source, mOriginalPath, getEditorSavePath())
 val intent = ImageEditorActivity.intent(this, setup)
 startActivityForResult(intent, ACTION_REQUEST_EDITOR)
 ```
-more details usage can be explore in example module
+more *details usage* can be explore in *example module*
 
 License
 -------

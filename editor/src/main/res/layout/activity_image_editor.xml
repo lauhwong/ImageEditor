@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.miracle.view.imageeditor.layer.ActionFrameLayout
+        android:id="@+id/layerActionView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_black">
+
+        <com.miracle.view.imageeditor.layer.photoview.PhotoView
+            android:id="@+id/layerImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <FrameLayout
+            android:id="@+id/layerEditorParent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.miracle.view.imageeditor.layer.LayerComposite
+                android:id="@+id/layerComposite"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.miracle.view.imageeditor.layer.MosaicView
+                    android:id="@+id/layerMosaicView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <com.miracle.view.imageeditor.layer.ScrawlView
+                    android:id="@+id/layerScrawlView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <com.miracle.view.imageeditor.layer.StickerView
+                    android:id="@+id/layerStickerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <com.miracle.view.imageeditor.layer.TextPastingView
+                    android:id="@+id/layerTextPastingView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </com.miracle.view.imageeditor.layer.LayerComposite>
+
+            <com.miracle.view.imageeditor.layer.CropView
+                android:id="@+id/layerCropView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+    </com.miracle.view.imageeditor.layer.ActionFrameLayout>
+    <!--actionBar-->
+    <include
+        android:id="@+id/editorBar"
+        layout="@layout/action_bar_editor"/>
+
+    <include
+        android:id="@+id/layoutCropDetails"
+        layout="@layout/crop_func_details"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/layoutDragDelete"
+        layout="@layout/layout_drag_to_delete"
+        android:visibility="gone"/>
+
+    <FrameLayout
+        android:id="@+id/flFunc"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"/>
+</FrameLayout>
+
+

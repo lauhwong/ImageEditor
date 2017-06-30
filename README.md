@@ -7,7 +7,7 @@ ImageEditor
 Look like whta ?
 --------------
 
-![Logo](editor01.gif)
+![Editor](editor01.gif)
 
 
 How to use lib

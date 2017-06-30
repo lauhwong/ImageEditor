@@ -32,5 +32,5 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
     
- [1]: <https://github.com/chrisbanes/PhotoView>
- [2]: <https://github.com/Curzibn/Luban>
+ <https://github.com/chrisbanes/PhotoView>
+ <https://github.com/Curzibn/Luban>

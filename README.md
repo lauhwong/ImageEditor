@@ -1,13 +1,13 @@
 ImageEditor
 ============
 
-![Logo](logo.png)
+![Logo](/pic/logo.png)
 
 
 Look like whta ?
 --------------
 
-![Editor](editor01.gif)
+![Editor](/pic/editor01.gif)
 
 
 How to use lib

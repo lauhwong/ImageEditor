@@ -4,7 +4,7 @@ ImageEditor
 ![Logo](/pic/logo.png)
 
 
-Look like whta ?
+It looks like what ?
 --------------
 
 ![Editor](/pic/editor01.gif)

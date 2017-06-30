@@ -1,7 +1,7 @@
 ImageEditor
 ============
 
-![Logo](website/static/logo.png)
+![Logo](logo.png)
 
 How to use lib
 --------------

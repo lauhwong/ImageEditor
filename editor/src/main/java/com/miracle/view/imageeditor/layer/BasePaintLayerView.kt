@@ -10,6 +10,9 @@ import com.miracle.view.imageeditor.Utils
 import com.miracle.view.imageeditor.bean.SaveStateMarker
 
 /**
+ * ## Base paintingLayerView  for [ScrawlView] and [MosaicView]
+ *  It's hold move path[paintPath] for user's finger move
+ *
  * Created by lxw
  */
 abstract class BasePaintLayerView<T : SaveStateMarker> : BaseLayerView<T> {

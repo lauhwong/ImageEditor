@@ -4,6 +4,8 @@ import android.graphics.RectF
 import android.view.MotionEvent
 
 /**
+ * ## A helper clz for CropView's window rect moving
+ *
  * Created by lxw
  */
 class CropWindowHelper(var targetRadius: Float) {

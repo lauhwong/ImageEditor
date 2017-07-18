@@ -3,6 +3,8 @@ package com.miracle.view.imageeditor.layer
 import com.miracle.view.imageeditor.bean.EditorCacheData
 
 /**
+ * ## A Layer Cache Marker support for layer data
+ *
  * Created by lxw
  */
 interface LayerCacheNode {

@@ -9,6 +9,8 @@ import com.miracle.view.imageeditor.view.ColorSeekBar
 import kotlinx.android.synthetic.main.activity_editor_text_input.*
 
 /**
+ * ## TextInput activity
+ *
  * Created by lxw
  */
 class EditorTextInputActivity : AppCompatActivity() {

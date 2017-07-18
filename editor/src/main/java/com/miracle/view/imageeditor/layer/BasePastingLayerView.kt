@@ -10,6 +10,9 @@ import com.miracle.view.imageeditor.*
 import com.miracle.view.imageeditor.bean.PastingSaveStateMarker
 
 /**
+ *  ## Base  pasting layerView  for [StickerView] and [TextPastingView]
+ *  It's hold drag info and callback of show or hide pasting removable
+ *
  * Created by lxw
  */
 abstract class BasePastingLayerView<T : PastingSaveStateMarker> : BaseLayerView<T> {

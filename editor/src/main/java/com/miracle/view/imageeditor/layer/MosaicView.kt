@@ -11,6 +11,8 @@ import com.miracle.view.imageeditor.saveEntireLayer
 import com.miracle.view.imageeditor.view.MosaicMode
 
 /**
+ * ## MosaicView show to user
+ *
  * Created by lxw
  */
 class MosaicView : BasePaintLayerView<MosaicSaveState> {

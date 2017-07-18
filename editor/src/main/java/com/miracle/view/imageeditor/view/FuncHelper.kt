@@ -13,6 +13,8 @@ import com.miracle.view.imageeditor.layer.*
 import com.miracle.view.imageeditor.logD1
 
 /**
+ * ## Handle all Function by this clz(like func details business handler)
+ *
  * Created by lxw
  */
 class FuncHelper(private val mProvider: LayerViewProvider, private val mDragToDeleteView: DragToDeleteView) : FuncModeListener, FuncDetailsListener, OnRevokeListener {

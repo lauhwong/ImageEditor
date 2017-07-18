@@ -6,6 +6,8 @@ import android.widget.FrameLayout
 import com.miracle.view.imageeditor.R
 
 /**
+ * ## UI elements of scrawl view
+ *
  * Created by lxw
  */
 class ScrawlDetailsView(ctx: Context) : FrameLayout(ctx) {

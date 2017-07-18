@@ -26,6 +26,13 @@ import java.io.File
 import java.util.concurrent.Executors
 
 /**
+ * ## Entrance of image editor,delegate for all ui elements and also imageCompose func
+ * Simple code to start:
+ *```
+ *  val setup = EditorSetup(source, mOriginalPath, getEditorSavePath())
+ *  val intent = ImageEditorActivity.intent(this, setup)
+ *  startActivityForResult(intent, ACTION_REQUEST_EDITOR)
+ *```
  * Created by lxw
  */
 class ImageEditorActivity : AppCompatActivity(), LayerViewProvider {
@@ -51,11 +58,10 @@ class ImageEditorActivity : AppCompatActivity(), LayerViewProvider {
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
-        //window flag.
+        //window flag for show status bar in full screen .// set system ui visible
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         setContentView(R.layout.activity_image_editor)
-        // reset placeHolder height...
         viewPlaceHolder.layoutParams.height = Utils.getStatusBarHeight(this)
         initData()
         initView()
@@ -102,6 +108,10 @@ class ImageEditorActivity : AppCompatActivity(), LayerViewProvider {
         restoreData()
     }
 
+    /**
+     * restore data for redraw all cache ,and undo or other func
+     * it's important to get right editor path and editorId...
+     */
     private fun restoreData() {
         val op = mEditorSetup.originalPath
         val ep = mEditorSetup.editorPath
@@ -217,6 +227,9 @@ class ImageEditorActivity : AppCompatActivity(), LayerViewProvider {
         imageComposeTask?.execute(path)
     }
 
+    /**
+     * image compose cancel
+     */
     private fun onImageComposeCancel() {
         supportRecycle()
         val intent = Intent()
@@ -224,6 +237,9 @@ class ImageEditorActivity : AppCompatActivity(), LayerViewProvider {
         finish()
     }
 
+    /**
+     * image compose result success or fail
+     */
     private fun onImageComposeResult(editStatus: Boolean) {
         supportRecycle()
         val intent = Intent()
@@ -238,6 +254,9 @@ class ImageEditorActivity : AppCompatActivity(), LayerViewProvider {
         mCropHelper.getSavedCropState()?.reset()
     }
 
+    /**
+     * AsyncTask for image Compose
+     */
     inner class ImageComposeTask(private val mProvider: LayerViewProvider) : AsyncTask<String, Void, Boolean>() {
         private var mDialog = ProgressDialog(mProvider.getActivityContext())
         private var mPath: String? = null
@@ -256,6 +275,7 @@ class ImageEditorActivity : AppCompatActivity(), LayerViewProvider {
             mPath = params[0]
             val cropState = mProvider.getCropHelper().getSavedCropState()
             val delegate = mProvider.getRootEditorDelegate()
+            //draw image data layer by layer
             val rootBit = cropState?.cropBitmap ?: delegate.getDisplayBitmap()
             val compose = Bitmap.createBitmap(layerComposite.width, layerComposite.height, Bitmap.Config.RGB_565)
             val canvas = Canvas(compose)

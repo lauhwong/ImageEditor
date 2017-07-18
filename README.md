@@ -18,11 +18,28 @@ dependencies {
   compile 'com.github.lauhwong:image-editor:1.0'
 }
 ```
-and then apply it in your application:
+and then use it in your application like this:
+
 ```kotlin
 val setup = EditorSetup(source, mOriginalPath, getEditorSavePath())
 val intent = ImageEditorActivity.intent(this, setup)
 startActivityForResult(intent, ACTION_REQUEST_EDITOR)
+```
+receive iamgeEditor result from onActivityResult may be like code below:
+
+```kotlin
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        data ?: return
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                ACTION_REQUEST_EDITOR -> {
+                    val result = data.getSerializableExtra(resultCode.toString()) as EditorResult
+					handleResultFromEditor(result)
+				}
+			}
+}
+
 ```
 more *details usage* can be explore in *example module*
 

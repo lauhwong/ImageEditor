@@ -3,6 +3,8 @@ package com.miracle.view.imageeditor.view
 import com.miracle.view.imageeditor.R
 
 /**
+ * ## Mosaic mode supported  in current version
+ *
  * Created by lxw
  */
 enum class MosaicMode {

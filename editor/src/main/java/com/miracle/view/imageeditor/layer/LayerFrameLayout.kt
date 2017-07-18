@@ -8,6 +8,8 @@ import android.widget.FrameLayout
 
 
 /**
+ * ## None use
+ *
  * Created by lxw
  */
 class LayerFrameLayout : FrameLayout {

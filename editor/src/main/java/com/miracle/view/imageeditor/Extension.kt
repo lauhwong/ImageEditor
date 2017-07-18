@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.Toast
 
 /**
+ * ## Obj extensions for simple use
+ *
  * Created by lxw
  */
 fun Any.logD(message: String) {

@@ -8,6 +8,8 @@ import android.widget.ImageView
 import com.miracle.view.imageeditor.Utils.callChildren
 
 /**
+ * ## A delegate for Editor just simplify the callback
+ *
  * Created by lxw
  */
 class RootEditorDelegate(val rootNode: RootNode<ImageView>, val delegateParent: ViewGroup) : RootNode<ImageView>, LayerTransformer, OnPhotoRectUpdateListener {

@@ -16,6 +16,11 @@ import com.miracle.view.imageeditor.recycleBitmap
 import com.miracle.view.imageeditor.setInt
 
 /**
+ * ## Base Layer for all function layer draw,redraw ,undo and restore
+ *  Flowing properties is very important:
+ *  1. [drawMatrix]
+ *  2. [saveStateMap]
+ *
  * Created by lxw
  */
 abstract class BaseLayerView<T : SaveStateMarker> : View, LayerTransformer
@@ -79,6 +84,11 @@ abstract class BaseLayerView<T : SaveStateMarker> : View, LayerTransformer
         displayCanvas = null
     }
 
+    /**
+     * 2 part
+     *  1. draw layer bitmap
+     *  2. drawMask view to cover data out of root layer
+     */
     override fun onDraw(canvas: Canvas) {
 //        displayCanvas?.let {
 //            drawMask(it)
@@ -179,6 +189,10 @@ abstract class BaseLayerView<T : SaveStateMarker> : View, LayerTransformer
 
     }
 
+    /**
+     * open fun for intercept touch event or not.
+     * if intercept this layer will handle it,other wise do nothing
+     */
     open fun checkInterceptedOnTouchEvent(event: MotionEvent): Boolean {
         return true
     }
@@ -202,15 +216,22 @@ abstract class BaseLayerView<T : SaveStateMarker> : View, LayerTransformer
         postInvalidate()
     }
 
+    /**
+     * invalidate all cached data
+     */
     abstract fun drawAllCachedState(canvas: Canvas)
 
     open fun initSupportView(context: Context) {
 
     }
 
+    /**
+     * ui element undo clicked
+     */
     open fun revoke() {
 
     }
+    //region of save and restore data
 
     open fun getEditorResult() = LayerEditResult(supportMatrix, displayBitmap)
 

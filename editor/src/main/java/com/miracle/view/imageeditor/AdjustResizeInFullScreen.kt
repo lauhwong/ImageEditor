@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 
 /**
  * Created by lxw
+ *
  * @see https://stackoverflow.com/questions/7417123/android-how-to-adjust-layout-in-full-screen-mode-when-softkeyboard-is-visible
  */
 class AdjustResizeInFullScreen private constructor(activity: Activity) {

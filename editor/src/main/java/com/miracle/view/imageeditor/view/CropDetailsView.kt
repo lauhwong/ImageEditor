@@ -6,6 +6,8 @@ import com.miracle.view.imageeditor.R
 import com.miracle.view.imageeditor.Utils
 
 /**
+ * ## Ui details element for crop view
+ *
  * Created by lxw
  */
 class CropDetailsView(val view: View) {
@@ -33,6 +35,7 @@ class CropDetailsView(val view: View) {
         color = Utils.getResourceColor(view.context, color)
         mRestoreView.setTextColor(color)
     }
+
     fun showOrHide(show: Boolean) {
         view.visibility = if (show) View.VISIBLE else View.GONE
     }

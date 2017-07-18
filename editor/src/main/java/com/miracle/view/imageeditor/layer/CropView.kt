@@ -7,9 +7,11 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.miracle.view.imageeditor.Utils
-import com.miracle.view.imageeditor.logD1
 
 /**
+ * ## CropView just for make crop options
+ * @see CropWindowHelper
+ *
  * Created by lxw
  */
 class CropView : View, GestureDetectorListener, OnPhotoRectUpdateListener {

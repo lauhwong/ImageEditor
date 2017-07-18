@@ -3,6 +3,8 @@ package com.miracle.view.imageeditor.view
 import com.miracle.view.imageeditor.R
 
 /**
+ * ## All editor Mode in current editor version
+ *
  * Created by lxw
  */
 enum class EditorMode {

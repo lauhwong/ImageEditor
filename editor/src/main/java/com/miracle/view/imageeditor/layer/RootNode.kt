@@ -5,9 +5,13 @@ import android.graphics.Matrix
 import android.graphics.RectF
 
 /**
+ * ## Root node marker
+ *
+ * @see com.miracle.view.imageeditor.layer.photoview.PhotoView
+ *
  * Created by lxw
  */
-interface RootNode<RootView> {
+interface RootNode<out RootView> {
 
     fun addOnMatrixChangeListener(listener: OnPhotoRectUpdateListener)
 

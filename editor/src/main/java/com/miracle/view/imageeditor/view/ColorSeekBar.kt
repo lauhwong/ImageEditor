@@ -11,6 +11,9 @@ import android.view.View
 import com.miracle.view.imageeditor.R
 import java.util.*
 
+/**
+ * Color seek bar
+ */
 class ColorSeekBar : View {
     private var mBackgroundColor = 0xffffffff.toInt()
     private var mColorSeeds = intArrayOf(0xFF000000.toInt(), 0xFF9900FF.toInt(), 0xFF0000FF.toInt(), 0xFF00FF00.toInt(), 0xFF00FFFF.toInt(), 0xFFFF0000.toInt(), 0xFFFF00FF.toInt(), 0xFFFF6600.toInt(), 0xFFFFFF00.toInt(), 0xFFFFFFFF.toInt(), 0xFF000000.toInt())

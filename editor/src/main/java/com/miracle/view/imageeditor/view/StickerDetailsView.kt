@@ -14,6 +14,8 @@ import com.miracle.view.imageeditor.layer.Sticker
 import com.miracle.view.imageeditor.layer.StickerUtils
 
 /**
+ * ## UI elements for sticker View
+ *
  * Created by lxw
  */
 class StickerDetailsView(ctx: Context) : FrameLayout(ctx) {

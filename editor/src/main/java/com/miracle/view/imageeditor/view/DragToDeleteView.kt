@@ -9,6 +9,8 @@ import com.miracle.view.imageeditor.Utils
 import com.miracle.view.imageeditor.setInt
 
 /**
+ * ## Ui element of pasting View to drag and delete .
+ *
  * Created by lxw
  */
 class DragToDeleteView(private val view: View) {

@@ -14,6 +14,8 @@ import com.miracle.view.imageeditor.layer.ActionFrameLayout
 import java.util.*
 
 /**
+ * ## FuncAndActionBarAnimHelper to show or hide action bar and function bar
+ *
  * Created by lxw
  */
 class FuncAndActionBarAnimHelper(layerActionView: ActionFrameLayout, val editorBar: View, val funcView: View, val activityContext: Context)

@@ -6,6 +6,8 @@ import android.graphics.Paint
 import android.graphics.Rect
 
 /**
+ * ## Utils of generate different kinds of mosaic bitmap
+ *
  * Created by lxw
  */
 object MosaicUtils {

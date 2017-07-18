@@ -11,6 +11,8 @@ import com.miracle.view.imageeditor.Utils
 import com.miracle.view.imageeditor.bean.ScrawlSaveState
 
 /**
+ * ## ScrawlView show to user
+ *
  * Created by lxw
  */
 class ScrawlView : BasePaintLayerView<ScrawlSaveState> {

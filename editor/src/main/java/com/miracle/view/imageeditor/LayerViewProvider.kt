@@ -9,6 +9,8 @@ import com.miracle.view.imageeditor.view.EditorMode
 import com.miracle.view.imageeditor.view.FuncAndActionBarAnimHelper
 
 /**
+ * # UI element provider
+ *
  * Created by lxw
  */
 interface LayerViewProvider {

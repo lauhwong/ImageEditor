@@ -12,9 +12,10 @@ import com.miracle.view.imageeditor.schedule
 
 
 /**
+ * ## ScrawlView show to user
+ *
  * Created by lxw
  */
-
 class TextPastingView : BasePastingLayerView<TextPastingSaveState> {
     private var mFocusRectOffset = 0f
     private lateinit var mTextPaint: Paint

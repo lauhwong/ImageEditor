@@ -11,6 +11,8 @@ import com.miracle.view.imageeditor.R
 import com.miracle.view.imageeditor.Utils
 
 /**
+ * ## UI element show mosaic details view
+ *
  * Created by lxw
  */
 class MosaicDetailsView(ctx: Context, onMosaicChangeListener: OnMosaicChangeListener?) : FrameLayout(ctx) {

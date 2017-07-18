@@ -8,6 +8,9 @@ import android.widget.FrameLayout
 
 
 /**
+ * ## Underlay  view for intercept action event pass to layer
+ *  A logic useful for [CropView]
+ *
  * Created by lxw
  */
 class LayerComposite : FrameLayout {

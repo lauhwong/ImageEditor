@@ -15,6 +15,8 @@ import com.miracle.view.imageeditor.logD1
 import com.miracle.view.imageeditor.recycleBitmap
 
 /**
+ * ## Helper class for Crop View's restore and save
+ *
  * Created by lxw
  */
 class CropHelper(private val mCropView: CropView, private val mCropDetailsView: CropDetailsView,

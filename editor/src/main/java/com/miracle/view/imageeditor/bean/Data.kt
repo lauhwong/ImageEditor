@@ -10,6 +10,9 @@ import java.io.Serializable
 /**
  * Created by lxw
  */
+/**
+ * serializable data mark
+ */
 interface SharableData : Serializable
 
 data class InputTextData(val id: String?, val text: String?, val color: Int?) : SharableData
@@ -17,20 +20,42 @@ data class InputTextData(val id: String?, val text: String?, val color: Int?) : 
 data class InputStickerData(val sticker: Sticker, val stickerIndex: Int) : SharableData
 
 data class LayerEditResult(val supportMatrix: Matrix, val bitmap: Bitmap?) : SharableData
-
+/**
+ * image editor setup data
+ * @property originalPath the editorPath's originalPath
+ * @property editorPath the image you wanted to edit .
+ * @property editor2SavedPath in which path edit image to save.
+ */
 data class EditorSetup(val originalPath: String?, val editorPath: String?, val editor2SavedPath: String) : SharableData
 
+/**
+ * image editor result data.
+ * @property editStatus true represent user edit this image false otherwise
+ * @property originalPath not equals editorSetup's originalPath ,it shows really edit image called really editImagePath
+ * @property editorPath equals editorSetup's editorPath
+ * @property editor2SavedPath equals editorSetup's editor2SavedPath
+ */
 data class EditorResult(val originalPath: String?, val editorPath: String?, val editor2SavedPath: String, val editStatus: Boolean) : SharableData
 
+/**
+ * inner editor cache for reEdit and undo or just say recover
+ */
 data class EditorCacheData(val layerCache: Map<String, SaveStateMarker>) : SharableData
-/*details*/
+
+/**
+ * mark of image editor's detail function panel's share data structure
+ */
 interface FuncDetailsMarker
 
 data class ScrawlDetails(val color: Int) : FuncDetailsMarker
 
 data class MosaicDetails(val mosaicMode: MosaicMode) : FuncDetailsMarker
 
-/*SaveStateMarker*/
+/**
+ * it's important for each painting layer,each layer holds it's special dataStructure
+ * 1.redraw all view's cache
+ * 2.save view's painting data for restore simply called restore info
+ */
 abstract class SaveStateMarker {
     var id = Utils.randomId()
     override fun equals(other: Any?): Boolean {
@@ -53,6 +78,9 @@ abstract class SaveStateMarker {
     }
 }
 
+/**
+ * Crop func's holding data structure
+ */
 data class CropSaveState(var originalBitmap: Bitmap, var originalDisplayRectF: RectF, val originalMatrix: Matrix, var supportMatrix: Matrix, var cropRect: RectF)
     : SaveStateMarker() {
     var cropBitmap: Bitmap? = null
@@ -70,6 +98,9 @@ data class CropSaveState(var originalBitmap: Bitmap, var originalDisplayRectF: R
     }
 }
 
+/**
+ * Scrawl func's holding data structure
+ */
 data class ScrawlSaveState(var paint: Paint, var path: Path) : SaveStateMarker() {
     override fun deepCopy(): SaveStateMarker {
         val state = ScrawlSaveState(Utils.copyPaint(paint), path)
@@ -84,6 +115,9 @@ abstract class PastingSaveStateMarker(val initDisplayRect: RectF, val displayMat
 
 }
 
+/**
+ * TextPasting func's holding data structure
+ */
 data class TextPastingSaveState(val text: String, val textColor: Int, val initTextRect: RectF, private val initDisplay: RectF, private val display: Matrix) : PastingSaveStateMarker(initDisplay, display) {
     override fun deepCopy(): SaveStateMarker {
         val state = TextPastingSaveState(text, textColor, RectF(initTextRect), RectF(initDisplay), Matrix(display))
@@ -93,6 +127,9 @@ data class TextPastingSaveState(val text: String, val textColor: Int, val initTe
 
 }
 
+/**
+ *  Sticker func's holding data structure
+ */
 data class StickerSaveState(val sticker: Sticker, val stickerIndex: Int, private val initDisplay: RectF, private val display: Matrix) : PastingSaveStateMarker(initDisplay, display) {
     override fun deepCopy(): SaveStateMarker {
         val state = StickerSaveState(sticker, stickerIndex, RectF(initDisplay), Matrix(display))
@@ -101,6 +138,9 @@ data class StickerSaveState(val sticker: Sticker, val stickerIndex: Int, private
     }
 }
 
+/**
+ * Mosaic func's holding data structure
+ */
 data class MosaicSaveState(var mode: MosaicMode, var path: Path) : SaveStateMarker() {
     override fun deepCopy(): SaveStateMarker {
         return super.deepCopy()

@@ -1,6 +1,8 @@
 package com.miracle.view.imageeditor.view
 
 /**
+ * ## Mode handler :like change selected bar
+ *
  * Created by lxw
  */
 interface EditorModeHandler {

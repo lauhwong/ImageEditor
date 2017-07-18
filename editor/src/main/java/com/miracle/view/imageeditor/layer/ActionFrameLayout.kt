@@ -2,14 +2,15 @@ package com.miracle.view.imageeditor.layer
 
 import android.annotation.TargetApi
 import android.content.Context
-import android.graphics.Matrix
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.FrameLayout
 
 
 /**
+ * ## Root layer for handle action event
+ *  it coordinate with [com.miracle.view.imageeditor.view.FuncAndActionBarAnimHelper]
+ *
  * Created by lxw
  */
 class ActionFrameLayout : FrameLayout {
@@ -36,6 +37,9 @@ class ActionFrameLayout : FrameLayout {
 
     }
 
+    /**
+     * always dispatch action for listener
+     */
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         if (ev.action == MotionEvent.ACTION_UP) {
             actionListener?.actionUp()

@@ -7,7 +7,7 @@ import android.view.VelocityTracker
 import android.view.ViewConfiguration
 
 /**
- * Does a whole lot of gesture detecting.
+ * ## Does a whole lot of gesture detecting.
  */
 class CustomGestureDetector(context: Context, listener: GestureDetectorListener) {
     private var mActivePointerId = INVALID_POINTER_ID

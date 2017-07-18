@@ -14,6 +14,8 @@ import com.miracle.view.imageeditor.increase
 import com.miracle.view.imageeditor.schedule
 
 /**
+ * ## ScrawlView show to user
+ *
  * Created by lxw
  */
 class StickerView : BasePastingLayerView<StickerSaveState> {

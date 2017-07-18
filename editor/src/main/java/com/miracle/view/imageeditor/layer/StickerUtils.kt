@@ -8,6 +8,8 @@ import com.miracle.view.imageeditor.R
 import java.util.*
 
 /**
+ * ##Sticker utils for emoji or others...
+ *
  * Created by lxw
  */
 object StickerUtils {

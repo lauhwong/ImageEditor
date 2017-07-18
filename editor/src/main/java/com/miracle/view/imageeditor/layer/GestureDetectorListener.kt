@@ -1,6 +1,8 @@
 package com.miracle.view.imageeditor.layer
 
 /**
+ * ## A global callback for [CustomGestureDetector]
+ *
  * Created by lxw
  */
 interface GestureDetectorListener {
@@ -12,6 +14,7 @@ interface GestureDetectorListener {
     fun onFingerUp(upX: Float, upY: Float) {
 
     }
+
     fun onFingerCancel() {
 
     }

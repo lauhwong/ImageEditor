@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private var mOriginalPath: String? = null
     private lateinit var ivDisplay: ImageView
     private lateinit var mEditorPath: String
-    private var editorNum = 1
     private val editResultMap = mutableMapOf<String, String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         private val ACTION_REQUEST_EDITOR = 302
     }
 
-    fun getEditorSavePath() = "${Environment.getExternalStorageDirectory()}/test00${editorNum++}.png"
+    fun getEditorSavePath() = "${Environment.getExternalStorageDirectory()}/image-editor-${System.currentTimeMillis()}.png"
 
     fun chooseImage(view: View) {
         pickFromGallery()

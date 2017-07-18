@@ -29,15 +29,16 @@ receive iamgeEditor result from onActivityResult may be like code below:
 
 ```kotlin
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+	super.onActivityResult(requestCode, resultCode, data)
         data ?: return
         if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                ACTION_REQUEST_EDITOR -> {
-                    val result = data.getSerializableExtra(resultCode.toString()) as EditorResult
-					handleResultFromEditor(result)
-				}
+		when (requestCode) {
+			ACTION_REQUEST_EDITOR -> {
+                    	val result = data.getSerializableExtra(resultCode.toString()) as EditorResult
+			handleResultFromEditor(result)
 			}
+		}
+	}
 }
 
 ```

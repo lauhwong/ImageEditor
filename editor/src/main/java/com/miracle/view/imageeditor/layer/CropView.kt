@@ -171,8 +171,12 @@ class CropView : View, GestureDetectorListener, OnPhotoRectUpdateListener {
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        mViewRect.set(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat())
-        mValidateBorderRect.set(mViewRect)
+        if(mViewRect.isEmpty){
+            mViewRect.set(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat())
+        }
+        if(mValidateBorderRect.isEmpty){
+            mValidateBorderRect.set(mViewRect)
+        }
     }
 
     override fun onPhotoRectUpdate(rect: RectF, matrix: Matrix) {

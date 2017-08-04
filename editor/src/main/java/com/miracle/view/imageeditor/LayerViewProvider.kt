@@ -30,4 +30,9 @@ interface LayerViewProvider {
     fun getSetupEditorId(): String
 
     fun getResultEditorId(): String
+
+    fun getEditorSizeInfo(): Pair<Int, Int>
+
+    fun getScreenSizeInfo(): Pair<Int, Int>
+
 }

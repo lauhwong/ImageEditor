@@ -21,4 +21,5 @@
         <item>#ee00ff</item>
         <item>#ff00e1</item>
     </array>
+    <color name="transparent">#00000000</color>
 </resources>

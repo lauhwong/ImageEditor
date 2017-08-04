@@ -3,6 +3,7 @@ package com.miracle.view.imageeditor
 import android.app.Activity
 import android.content.Context
 import android.graphics.*
+import android.os.Build
 import android.view.*
 
 
@@ -129,34 +130,28 @@ object Utils {
         return statusBarHeight
     }
 
-    /*hack status bar in fullScreen...*/
+    /*set status bar in fullScreen...*/
     fun hideStatusBar(activity: Activity) {
-        val attrs = activity.window.attributes
-        attrs.flags = attrs.flags or WindowManager.LayoutParams.FLAG_FULLSCREEN
-        activity.window.attributes = attrs
-//        fullScreen(true, activity)
+        fullScreen(true, activity)
     }
 
     fun showStatusBar(activity: Activity) {
-        val attrs = activity.window.attributes
-        attrs.flags = attrs.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN.inv()
-        activity.window.attributes = attrs
-//        fullScreen(false, activity)
+        fullScreen(false, activity)
     }
 
-//    private fun fullScreen(enable: Boolean, activity: Activity) {
-//        if (Build.VERSION.SDK_INT >= 19) {
-//            val flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//            val decorView = activity.window.decorView
-//            var systemUiVisibility = decorView.systemUiVisibility
-//            if (enable) {
-//                systemUiVisibility = systemUiVisibility or flags
-//            } else {
-//                systemUiVisibility = systemUiVisibility and flags.inv()
-//            }
-//            decorView.systemUiVisibility = systemUiVisibility
-//        }
-//    }
+    private fun fullScreen(enable: Boolean, activity: Activity) {
+        if (Build.VERSION.SDK_INT >= 19) {
+            val flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            val decorView = activity.window.decorView
+            var systemUiVisibility = decorView.systemUiVisibility
+            if (enable) {
+                systemUiVisibility = systemUiVisibility or flags
+            } else {
+                systemUiVisibility = systemUiVisibility and flags.inv()
+            }
+            decorView.systemUiVisibility = systemUiVisibility
+        }
+    }
 
     fun getNavigationBarHeight(context: Context): Int {
         val hasMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey()

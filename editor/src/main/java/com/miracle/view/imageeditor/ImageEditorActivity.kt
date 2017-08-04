@@ -6,8 +6,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Matrix
+import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
@@ -24,6 +27,7 @@ import kotlinx.android.synthetic.main.action_bar_editor.*
 import kotlinx.android.synthetic.main.activity_image_editor.*
 import java.io.File
 import java.util.concurrent.Executors
+
 
 /**
  * ## Entrance of image editor,delegate for all ui elements and also imageCompose func
@@ -43,6 +47,8 @@ class ImageEditorActivity : AppCompatActivity(), LayerViewProvider {
     private lateinit var mEditorSetup: EditorSetup
     private lateinit var mEditorId: String
     private lateinit var mEditorPath: String
+    private var mEditorWidth: Int = 0
+    private var mEditorHeight: Int = 0
 
     companion object {
         private val intentKey = "editorSetup"
@@ -58,16 +64,32 @@ class ImageEditorActivity : AppCompatActivity(), LayerViewProvider {
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
-        //window flag for show status bar in full screen .// set system ui visible
-        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
-        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-        setContentView(R.layout.activity_image_editor)
-        viewPlaceHolder.layoutParams.height = Utils.getStatusBarHeight(this)
+        initRootView()
         initData()
         initView()
         initActionBarListener()
-        Utils.showStatusBar(this)
+    }
 
+    private fun initRootView() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            this.window.statusBarColor = Utils.getResourceColor(this, R.color.bg_black);
+        }
+        //transparent necessary
+        window.setBackgroundDrawableResource(R.color.transparent)
+        //flag necessary
+        if (Build.VERSION.SDK_INT >= 19) {
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        }
+        val mBackgroundColor = ColorDrawable(Color.BLACK)
+        val view = View.inflate(this, R.layout.activity_image_editor, null)
+        if (Build.VERSION.SDK_INT >= 16) {
+            view.background = mBackgroundColor
+        } else {
+            view.setBackgroundDrawable(mBackgroundColor)
+        }
+        setContentView(view)
     }
 
     private fun initData() {
@@ -153,6 +175,8 @@ class ImageEditorActivity : AppCompatActivity(), LayerViewProvider {
             layerMosaicView.setupForMosaicView(imageBitmap)
         }
         //    }
+        mEditorWidth = imageBitmap.width;
+        mEditorHeight = imageBitmap.height;
     }
 
     /*for initialize mosaic view's matrix*/
@@ -202,6 +226,14 @@ class ImageEditorActivity : AppCompatActivity(), LayerViewProvider {
         if (!mFuncHelper.onBackPress()) {
             super.onBackPressed()
         }
+    }
+
+    override fun getEditorSizeInfo(): Pair<Int, Int> {
+        return Pair(mEditorWidth, mEditorHeight)
+    }
+
+    override fun getScreenSizeInfo(): Pair<Int, Int> {
+        return Pair(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
     }
 
     override fun getFuncAndActionBarAnimHelper(): FuncAndActionBarAnimHelper = mFuncAndActionBarAnimHelper

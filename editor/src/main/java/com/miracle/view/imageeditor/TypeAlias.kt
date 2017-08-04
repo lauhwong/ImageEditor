@@ -19,5 +19,8 @@ typealias OnLayoutRectChange = (View, RectF) -> Unit
 
 typealias ImageComposeCallback = (Boolean) -> Unit
 
+typealias PreDrawSizeListener = (Int, Int) -> Unit
+
+
 
 

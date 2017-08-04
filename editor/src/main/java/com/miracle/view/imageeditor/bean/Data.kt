@@ -80,8 +80,16 @@ abstract class SaveStateMarker {
 
 /**
  * Crop func's holding data structure
+ * @property originalBitmap bitmap to edit
+ * @property originalDisplayRectF the rectF set by editor bitmap and matrix(@originalMatrix map bitmap to imageview)
+ * @property originalMatrix    bitmap to fit imageView generated this matrix
+ * @property supportMatrix rootView's matrix operation
+ * @property cropRect display window's crop rect
+ * @property originalCropRation  original view->crop display view ration
  */
-data class CropSaveState(var originalBitmap: Bitmap, var originalDisplayRectF: RectF, val originalMatrix: Matrix, var supportMatrix: Matrix, var cropRect: RectF)
+data class CropSaveState(var originalBitmap: Bitmap, var originalDisplayRectF: RectF, val originalMatrix: Matrix,
+                         var supportMatrix: Matrix,
+                         var cropRect: RectF, val originalCropRation: Float)
     : SaveStateMarker() {
     var cropBitmap: Bitmap? = null
     var cropFitCenterMatrix: Matrix = Matrix()
@@ -92,7 +100,7 @@ data class CropSaveState(var originalBitmap: Bitmap, var originalDisplayRectF: R
     }
 
     override fun deepCopy(): SaveStateMarker {
-        val state = CropSaveState(originalBitmap, RectF(originalDisplayRectF), Matrix(originalMatrix), Matrix(supportMatrix), RectF(cropRect))
+        val state = CropSaveState(originalBitmap, RectF(originalDisplayRectF), Matrix(originalMatrix), Matrix(supportMatrix), RectF(cropRect), originalCropRation)
         state.id = this.id
         return state
     }

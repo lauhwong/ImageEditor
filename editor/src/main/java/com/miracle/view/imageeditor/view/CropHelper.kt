@@ -16,14 +16,15 @@ import com.miracle.view.imageeditor.recycleBitmap
 
 /**
  * ## Helper class for Crop View's restore and save
- *
+ *  * save:
+ *  * restore:
  * Created by lxw
  */
 class CropHelper(private val mCropView: CropView, private val mCropDetailsView: CropDetailsView,
                  private val mProvider: LayerViewProvider) : CropDetailsView.OnCropOperationListener
         , LayerCacheNode {
     private var mCropSaveState: CropSaveState? = null
-    private val mCropScaleRatio = 0.95f
+    private var mCropScaleRatio = 0f
     private val mRootEditorDelegate = mProvider.getRootEditorDelegate()
     private val mFuncAndActionBarAnimHelper = mProvider.getFuncAndActionBarAnimHelper()
     private val mLayerComposite = mProvider.getLayerCompositeView()
@@ -56,7 +57,7 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
             mCropSaveState?.supportMatrix = lastMatrix
             mCropSaveState?.cropRect = lastCropRect
             if (mCropSaveState == null && lastBitmap != null && lastDisplayRect != null) {
-                mCropSaveState = CropSaveState(lastBitmap, lastDisplayRect, lastBaseMatrix, lastMatrix, lastCropRect)
+                mCropSaveState = CropSaveState(lastBitmap, lastDisplayRect, lastBaseMatrix, lastMatrix, lastCropRect, mCropScaleRatio)
             }
             mCropSaveState?.let {
                 val cropBitmap = getCropBitmap(lastCropRect, it.originalBitmap, it.supportMatrix, it.originalDisplayRectF)
@@ -98,30 +99,58 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
         closeCropView()
     }
 
+    //open cropView
     private fun setupCropView() {
+        //restore last cropSavedState
         mCropSaveState?.let {
             val showingBitmap = mRootEditorDelegate.getDisplayBitmap()
             if (it.cropBitmap != showingBitmap) {
                 it.cropBitmap?.recycle()
                 it.cropBitmap = showingBitmap
             }
+            //1.reset support matrix
             mRootEditorDelegate.resetEditorSupportMatrix(Matrix())
+            //2.set cropView's bitmap with original Bitmap
             mRootEditorDelegate.setDisplayBitmap(it.originalBitmap)
+            //3.set support matrix again,and set up crop rect
             mRootEditorDelegate.getRooView().addOnLayoutChangeListener(LayerImageOnLayoutChangeListener())
             mCropDetailsView.setRestoreTextStatus(true)
         }
+        //force2SetCropView
         mCropSaveState ?: let {
             force2SetupCropView()
         }
+        //other layer do not handle touch event.
         mLayerComposite.handleEvent = false
     }
 
     private fun force2SetupCropView() {
+        //get proper scale ration and start set up crop rect.
+        if (mCropScaleRatio <= 0) {
+            mCropDetailsView.view.post {
+                mCropScaleRatio = getCropRatio(mCropDetailsView.view.height)
+                initSetupViewWithScale()
+            }
+        } else {
+            initSetupViewWithScale()
+        }
+    }
+
+    private fun initSetupViewWithScale() {
         mRootEditorDelegate.force2Scale(mCropScaleRatio, false)
         val rect = mRootEditorDelegate.getDisplayingRect()
         mCropView.setupDrawingRect(rect!!)
         mCropView.updateCropMaxSize(rect.width(), rect.height())
         mCropDetailsView.setRestoreTextStatus(false)
+    }
+
+    private fun getCropRatio(cropDetailsHeight: Int): Float {
+        val screenPair = mProvider.getScreenSizeInfo()
+//        val editorPair = mProvider.getEditorSizeInfo()
+        val editorHeight = mRootEditorDelegate.getDisplayingRect()!!.height()
+        val maxEditorH = screenPair.second - 2 * cropDetailsHeight
+        val scaleRatio = maxEditorH * 1.0f / editorHeight
+        return if (scaleRatio > 0.95f) 0.95f else scaleRatio
     }
 
     inner class LayerImageOnLayoutChangeListener : android.view.View.OnLayoutChangeListener {
@@ -139,15 +168,18 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
     }
 
     private fun closeCropView() {
+        //1.clear crop drawing cache
         mCropView.clearDrawingRect()
         mCropSaveState?.let {
             val state = it
             it.cropBitmap?.let {
+                //2.reset editor support matrix and showing the cropped bitmap
                 resetEditorSupportMatrix(state)
                 logD1("closeCropView,reset cropBitmap")
                 mRootEditorDelegate.setDisplayBitmap(it)
             }
         }
+        //3.no saved state just release scale
         mCropSaveState ?: let {
             mRootEditorDelegate.force2Scale(1 / mCropScaleRatio, false)
         }
@@ -155,7 +187,7 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
     }
 
     fun resetEditorSupportMatrix(state: CropSaveState) {
-        /*convert rootLayer display matrix 2 supportMatrix*/
+        /*convert rootLayer display matrix 2 supportMatrix <Fit-center>*/
         val viewRect = RectF(0f, 0f, mRootEditorDelegate.getRooView().width.toFloat(), mRootEditorDelegate.getRooView().height.toFloat())
         val realMatrix = mapCropRect2FitCenter(state.cropRect, viewRect)
         state.cropFitCenterMatrix = realMatrix
@@ -200,9 +232,11 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
             it.originalBitmap = originalBitmap
             cropBitmap = getCropBitmap(it.cropRect, it.originalBitmap, it.supportMatrix, it.originalDisplayRectF)
             //resetEditorSupportMatrix(it)
+            mCropScaleRatio = it.originalCropRation
         }
         if (cropBitmap == null) {
             mCropSaveState = null
+            mCropScaleRatio = 0f
             return originalBitmap
         }
         return cropBitmap!!

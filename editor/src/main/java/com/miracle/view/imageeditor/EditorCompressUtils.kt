@@ -32,7 +32,7 @@ object EditorCompressUtils {
         } else {
             mSampleSize = Math.ceil(srcHeight / (1280.0 / scale)).toInt()
         }
-        return mSampleSize*2
+        return mSampleSize
     }
 
     fun getImageBitmap(filePath: String): Bitmap {
@@ -41,7 +41,7 @@ object EditorCompressUtils {
         BitmapFactory.decodeFile(filePath, options)
         val outWidth = options.outWidth
         val outHeight = options.outHeight
-        options.inSampleSize = computeSize(outWidth, outHeight)
+        options.inSampleSize = computeSize(outWidth, outHeight)*2
         options.inJustDecodeBounds = false
         logD1("options.inSampleSize=${options.inSampleSize}")
         return BitmapFactory.decodeFile(filePath, options)

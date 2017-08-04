@@ -1,7 +1,9 @@
 package com.miracle.view.imageeditor.view
 
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.TextView
+import com.miracle.view.imageeditor.PreDrawSizeListener
 import com.miracle.view.imageeditor.R
 import com.miracle.view.imageeditor.Utils
 
@@ -10,11 +12,13 @@ import com.miracle.view.imageeditor.Utils
  *
  * Created by lxw
  */
-class CropDetailsView(val view: View) {
+class CropDetailsView(val view: View) : ViewTreeObserver.OnPreDrawListener {
     var cropListener: OnCropOperationListener? = null
     private val mRestoreView: TextView
+    var onPreDrawListener: PreDrawSizeListener? = null
 
     init {
+        view.viewTreeObserver.addOnPreDrawListener(this)
         view.findViewById(R.id.ivCropRotate).setOnClickListener {
             cropListener?.onCropRotation(90f)
         }
@@ -28,6 +32,12 @@ class CropDetailsView(val view: View) {
         view.findViewById(R.id.ivCropConfirm).setOnClickListener {
             cropListener?.onCropConfirm()
         }
+    }
+
+    override fun onPreDraw(): Boolean {
+        onPreDrawListener?.invoke(view.width, view.height)
+        view.viewTreeObserver.removeOnPreDrawListener(this)
+        return false;
     }
 
     fun setRestoreTextStatus(restore: Boolean) {

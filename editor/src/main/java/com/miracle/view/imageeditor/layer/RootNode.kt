@@ -31,7 +31,7 @@ interface RootNode<out RootView> {
 
     fun getRooView(): RootView
 
-    fun getDisplayingRect(): RectF?
+    fun getDisplayingRect(): RectF
 
     fun getDisplayMatrix(): Matrix
 

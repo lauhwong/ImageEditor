@@ -51,16 +51,17 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
         if (mCropView.isCropWindowEdit() || mCropSaveState != null) {
             val lastMatrix = mRootEditorDelegate.getSupportMatrix()
             val lastBitmap = mRootEditorDelegate.getDisplayBitmap()
-            val lastDisplayRect = mRootEditorDelegate.getDisplayingRect()
+            val lastDisplayRect:RectF= mRootEditorDelegate.getDisplayingRect()
             val lastBaseMatrix = mRootEditorDelegate.getBaseLayoutMatrix()
             val lastCropRect = mCropView.getCropRect()
             mCropSaveState?.supportMatrix = lastMatrix
             mCropSaveState?.cropRect = lastCropRect
-            if (mCropSaveState == null && lastBitmap != null && lastDisplayRect != null) {
+            mCropSaveState?.lastDisplayRectF = lastDisplayRect
+            if (mCropSaveState == null && lastBitmap != null) {
                 mCropSaveState = CropSaveState(lastBitmap, lastDisplayRect, lastBaseMatrix, lastMatrix, lastCropRect, mCropScaleRatio)
             }
             mCropSaveState?.let {
-                val cropBitmap = getCropBitmap(lastCropRect, it.originalBitmap, it.supportMatrix, it.originalDisplayRectF)
+                val cropBitmap = getCropBitmap(lastCropRect, it.originalBitmap, it.supportMatrix, it.lastDisplayRectF)
                 if (it.cropBitmap != cropBitmap) {
                     recycleBitmap(it.cropBitmap)
                     it.cropBitmap = cropBitmap
@@ -230,7 +231,7 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
         var cropBitmap: Bitmap? = null
         mCropSaveState?.let {
             it.originalBitmap = originalBitmap
-            cropBitmap = getCropBitmap(it.cropRect, it.originalBitmap, it.supportMatrix, it.originalDisplayRectF)
+            cropBitmap = getCropBitmap(it.cropRect, it.originalBitmap, it.supportMatrix, it.lastDisplayRectF)
             //resetEditorSupportMatrix(it)
             mCropScaleRatio = it.originalCropRation
         }

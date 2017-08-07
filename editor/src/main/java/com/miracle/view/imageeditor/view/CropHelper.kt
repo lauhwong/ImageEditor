@@ -51,12 +51,12 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
         if (mCropView.isCropWindowEdit() || mCropSaveState != null) {
             val lastMatrix = mRootEditorDelegate.getSupportMatrix()
             val lastBitmap = mRootEditorDelegate.getDisplayBitmap()
-            val lastDisplayRect:RectF= mRootEditorDelegate.getDisplayingRect()
+            val lastDisplayRect: RectF = mRootEditorDelegate.getDisplayingRect()
             val lastBaseMatrix = mRootEditorDelegate.getBaseLayoutMatrix()
             val lastCropRect = mCropView.getCropRect()
-            mCropSaveState?.supportMatrix = lastMatrix
             mCropSaveState?.cropRect = lastCropRect
             mCropSaveState?.lastDisplayRectF = lastDisplayRect
+            mCropSaveState?.supportMatrix = lastMatrix
             if (mCropSaveState == null && lastBitmap != null) {
                 mCropSaveState = CropSaveState(lastBitmap, lastDisplayRect, lastBaseMatrix, lastMatrix, lastCropRect, mCropScaleRatio)
             }
@@ -70,7 +70,8 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
                 if (cropBitmap == it.originalBitmap) {
                     it.cropBitmap = null
                     mCropSaveState = null
-                    logD1("onCropConfirm,crop==original,set cropBitmap,mCropSaveState=null")
+                    //mRootEditorDelegate.setDisplayBitmap(it.originalBitmap)
+                    logD1("onCropConfirm,crop==original,set cropBitmap,mCropSaveState=null and setBitmap=originalBitmap")
                 }
             }
         }
@@ -138,17 +139,19 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
     }
 
     private fun initSetupViewWithScale() {
-        mRootEditorDelegate.force2Scale(mCropScaleRatio, false)
+        //1.reset minScale and setScale
+        mRootEditorDelegate.resetMinScale(mCropScaleRatio)
+        mRootEditorDelegate.setScale(mCropScaleRatio, true)
+        //2.update crop drawing rect
         val rect = mRootEditorDelegate.getDisplayingRect()
-        mCropView.setupDrawingRect(rect!!)
+        mCropView.setupDrawingRect(rect)
         mCropView.updateCropMaxSize(rect.width(), rect.height())
         mCropDetailsView.setRestoreTextStatus(false)
     }
 
     private fun getCropRatio(cropDetailsHeight: Int): Float {
         val screenPair = mProvider.getScreenSizeInfo()
-//        val editorPair = mProvider.getEditorSizeInfo()
-        val editorHeight = mRootEditorDelegate.getDisplayingRect()!!.height()
+        val editorHeight = mRootEditorDelegate.getDisplayingRect().height()
         val maxEditorH = screenPair.second - 2 * cropDetailsHeight
         val scaleRatio = maxEditorH * 1.0f / editorHeight
         return if (scaleRatio > 0.95f) 0.95f else scaleRatio
@@ -171,18 +174,20 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
     private fun closeCropView() {
         //1.clear crop drawing cache
         mCropView.clearDrawingRect()
+        //2.reset min scale
+        mRootEditorDelegate.resetMinScale(1.0f)
         mCropSaveState?.let {
             val state = it
             it.cropBitmap?.let {
-                //2.reset editor support matrix and showing the cropped bitmap
+                //3.reset editor support matrix and showing the cropped bitmap
                 resetEditorSupportMatrix(state)
                 logD1("closeCropView,reset cropBitmap")
                 mRootEditorDelegate.setDisplayBitmap(it)
             }
         }
-        //3.no saved state just release scale
+        //4.no saved state just release scale
         mCropSaveState ?: let {
-            mRootEditorDelegate.force2Scale(1 / mCropScaleRatio, false)
+            mRootEditorDelegate.setScale(1.0f,false)
         }
         mLayerComposite.handleEvent = true
     }
@@ -193,7 +198,8 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
         val realMatrix = mapCropRect2FitCenter(state.cropRect, viewRect)
         state.cropFitCenterMatrix = realMatrix
         val editorMatrix = Matrix()
-        editorMatrix.set(state.supportMatrix)
+        editorMatrix.setScale(1 / state.originalCropRation, 1 / state.originalCropRation)
+        editorMatrix.postConcat(state.supportMatrix)
         editorMatrix.postConcat(realMatrix)
         mRootEditorDelegate.resetEditorSupportMatrix(editorMatrix)
     }

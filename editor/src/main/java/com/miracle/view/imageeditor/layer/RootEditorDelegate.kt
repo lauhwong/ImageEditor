@@ -46,10 +46,13 @@ class RootEditorDelegate(val rootNode: RootNode<ImageView>, val delegateParent: 
         rootNode.setRotationBy(degree)
     }
 
-    override fun force2Scale(scale: Float, animate: Boolean) {
-        rootNode.force2Scale(scale, animate)
-    }
+    override fun resetMinScale(minScale: Float) = rootNode.resetMinScale(minScale)
 
+    override fun resetMaxScale(maxScale: Float) = rootNode.resetMaxScale(maxScale)
+
+    override fun setScale(scale: Float, animate: Boolean) {
+        rootNode.setScale(scale, animate)
+    }
     override fun addOnMatrixChangeListener(listener: OnPhotoRectUpdateListener) {
         rootNode.addOnMatrixChangeListener(listener)
     }
@@ -82,4 +85,5 @@ class RootEditorDelegate(val rootNode: RootNode<ImageView>, val delegateParent: 
     override fun getBaseLayoutMatrix() = rootNode.getBaseLayoutMatrix()
 
     override fun getOriginalRect() = rootNode.getOriginalRect()
+
 }

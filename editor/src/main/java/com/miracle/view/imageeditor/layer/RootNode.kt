@@ -19,7 +19,11 @@ interface RootNode<out RootView> {
     //setter
     fun setRotationBy(degree: Float)
 
-    fun force2Scale(scale: Float, animate: Boolean)
+    fun resetMinScale(minScale: Float)
+
+    fun resetMaxScale(maxScale: Float)
+
+    fun setScale(scale: Float, animate: Boolean)
 
     fun setSupportMatrix(matrix: Matrix)
 

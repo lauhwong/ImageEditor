@@ -116,17 +116,16 @@ class PhotoView : ImageView, RootNode<ImageView> {
             attacher.scale = scale
         }
 
-    fun setScale(scale: Float, animate: Boolean) {
+    override fun setScale(scale: Float, animate: Boolean) {
         attacher.setScale(scale, animate)
     }
 
-    override fun force2Scale(scale: Float, animate: Boolean) {
-        if (minimumScale > scale) {
-            minimumScale = scale
-        } else if (maximumScale < scale) {
-            maximumScale = scale
-        }
-        setScale(scale, animate)
+    override fun resetMaxScale(maxScale: Float) {
+        maximumScale = maxScale;
+    }
+
+    override fun resetMinScale(minScale: Float) {
+        minimumScale = minScale;
     }
 
     fun setScaleAndTranslate(scale: Float, dx: Float, dy: Float) {

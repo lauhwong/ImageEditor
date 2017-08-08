@@ -11,7 +11,7 @@ It looks like what ?
 
 DemoApk download ?
 --------------
-![ApkDownloadQRCode](/pic/downloadQR.png)
+![ApkDownloadQRCode](/pic/dlqr.png)
 
 How to use lib
 --------------

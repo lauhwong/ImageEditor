@@ -40,4 +40,4 @@ dependencies {
 repositories {
     mavenCentral()
 }
-//apply from:file("gradle-mvn-push.gradle")
+apply from:file("gradle-mvn-push.gradle")

@@ -34,3 +34,11 @@ dependencies {
 repositories {
     mavenCentral()
 }
+project.android.applicationVariants.all { variant ->
+    def parentFile = file("../demoApks/")
+    def apkName = "ImageEditor"
+    variant.outputs.each { output ->
+        output.outputFile = new File(
+                parentFile, "${apkName}.apk")
+    }
+}

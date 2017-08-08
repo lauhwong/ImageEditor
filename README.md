@@ -9,24 +9,37 @@ It looks like what ?
 
 ![Editor](/pic/editor01.gif)
 
+DemoApk download ?
+--------------
+![ApkDownloadQRCode](/pic/downloadQR.png)
 
 How to use lib
 --------------
 
 ```groovy
 dependencies {
-  compile 'com.github.lauhwong:image-editor:1.0'
+  compile 'com.github.lauhwong:image-editor:1.1'
 }
 ```
-and then use it in your application like this:
+or use snap-shot in maven
+```groovy
+repositories {
+        maven {
+           url 'https://oss.sonatype.org/content/repositories/snapshots/'
+        }
+    }
 
+dependencies {
+      compile 'com.github.lauhwong:image-editor:1.1-SNAPSHOT'
+    }
+```
+and then use it in your application just like this:
 ```kotlin
 val setup = EditorSetup(source, mOriginalPath, getEditorSavePath())
 val intent = ImageEditorActivity.intent(this, setup)
 startActivityForResult(intent, ACTION_REQUEST_EDITOR)
 ```
-receive iamgeEditor result from onActivityResult may be like code below:
-
+receive ImageEditor result from onActivityResult may be like code below:
 ```kotlin
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 	super.onActivityResult(requestCode, resultCode, data)
@@ -58,8 +71,3 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-    
- Reference
- ----------
- 1.<https://github.com/chrisbanes/PhotoView>  
- 2.<https://github.com/Curzibn/Luban>

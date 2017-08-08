@@ -198,7 +198,6 @@ class CropHelper(private val mCropView: CropView, private val mCropDetailsView: 
         val realMatrix = mapCropRect2FitCenter(state.cropRect, viewRect)
         state.cropFitCenterMatrix = realMatrix
         val editorMatrix = Matrix()
-        editorMatrix.setScale(1 / state.originalCropRation, 1 / state.originalCropRation)
         editorMatrix.postConcat(state.supportMatrix)
         editorMatrix.postConcat(realMatrix)
         mRootEditorDelegate.resetEditorSupportMatrix(editorMatrix)

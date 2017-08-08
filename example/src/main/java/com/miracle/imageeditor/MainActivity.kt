@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         private val ACTION_REQUEST_EDITOR = 302
     }
 
-    fun getEditorSavePath() = "${Environment.getExternalStorageDirectory()}/image-editor-${System.currentTimeMillis()}.png"
+    fun getEditorSavePath() = "${Environment.getExternalStorageDirectory()}/EditorCache/image-editor-${System.currentTimeMillis()}.png"
 
     fun chooseImage(view: View) {
         pickFromGallery()
